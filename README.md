@@ -4,6 +4,6 @@ Bem-vindo ao repositório da aula de Desenvolvimento para Dispositvos Móveis II
 
 ## Projetos desenvolvidos: 
 
-### 1. ** Frases Aleátorias  **
-- ** Descrição: ** O aplicativo tem como objetivo principal pegar de um range de frases motivacionais uma aleatória a cada clique em um botão.
+### 1. **Frases Aleátorias**
+- **Descrição:** O aplicativo tem como objetivo principal pegar de um range de frases motivacionais uma aleatória a cada clique em um botão.
 - Tecnologias: Bibliotecas java ( Random, ... )
