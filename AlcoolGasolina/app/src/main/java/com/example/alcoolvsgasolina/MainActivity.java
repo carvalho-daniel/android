@@ -37,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
         txtAcool.addTextChangedListener(new Ouvidor(txtAcool));
 
 
-
     }
 
     public void onClick(View view) {
@@ -57,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
                 txtResultado.setText(melhor <= 0.7 ? "Álcool" : "Gasolina");
             }
 
+            // vamo ver se esse comentario vai
 
 
         } catch (Exception e) {
