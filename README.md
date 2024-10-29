@@ -11,3 +11,6 @@ Bem-vindo ao repositório da aula de Desenvolvimento para Dispositvos Móveis II
 
 ### 2. **Álcool ou Gasolina**
 - **Descrição:** Entender dado uma entrada se é mais viável abastecer com gasolina ou ácool.
+
+### 3. **Cálculo IMC**
+- **Descrção: ** Calcular o IMC dado a entrada de peso e altura
