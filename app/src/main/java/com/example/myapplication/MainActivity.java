@@ -52,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
             // retira a formatação das entradas
             txtPeso   = txtPeso.replaceAll("[^\\d]", "");
             txtAltura = txtAltura.replaceAll("[^\\d]", "");
+            txtPeso   = txtPeso.replaceAll(",", "");
+            txtAltura = txtAltura.replaceAll(",", "");
 
             double peso   = Double.parseDouble(txtPeso);
             double altura = Double.parseDouble(txtAltura);
