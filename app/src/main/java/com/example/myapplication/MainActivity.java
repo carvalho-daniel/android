@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -43,19 +44,43 @@ public class MainActivity extends AppCompatActivity {
         //  dividindo o peso (em quilogramas) pela altura ao quadrado (em metros)
 
         try {
-            double peso   = Double.parseDouble(((EditText)findViewById(R.id.peso)).getText().toString());
-            double altura = Double.parseDouble(((EditText)findViewById(R.id.altura)).getText().toString());
+            String tipoPeso;
+
+            String txtPeso   = peso.getText().toString();
+            String txtAltura = altura.getText().toString();
+
+            txtPeso   = txtPeso.replaceAll("[^\\d]", "");
+            txtAltura = txtAltura.replaceAll("[^\\d]", "");
+
+
+            double peso   = Double.parseDouble(txtPeso);
+            double altura = Double.parseDouble(txtAltura);
 
             double imc  = peso/(altura*altura);
             imc *= 100;
 
+            @SuppressLint("DefaultLocale")
+            String formatado = String.format("%.2f", imc);
+            txtImc.setText("IMC: " + formatado);
 
+            if (imc <= 18.5) {
+                tipoPeso = "Baixo peso";
+            } else if (imc > 18.5 && imc <= 24.9) {
+                tipoPeso = "Eutrofia (peso adequado)";
+            } else if (imc >= 25 && imc <= 29.9) {
+                tipoPeso = "Sobrepeso";
+            } else if (imc >= 30 && imc <= 34.9) {
+                tipoPeso = "Obesidade grau 1";
+            } else if (imc >= 35 && imc <= 39.9) {
+                tipoPeso = "Obesidade grau 2";
+            } else {
+                tipoPeso = "Obesidade extrema";
+            }
 
-            txtImc.setText("IMC: " + imc);
-
+            txtTipoPeso.setText(tipoPeso);
 
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "Digite as informações certas! Erro: " + e.getMessage(), 0).show();
+            Toast.makeText(getApplicationContext(), "Digite as informações certas! Erro: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
 

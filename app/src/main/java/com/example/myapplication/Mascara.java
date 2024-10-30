@@ -5,13 +5,15 @@ import android.text.TextWatcher;
 import android.widget.EditText;
 
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 public class Mascara implements TextWatcher {
-    EditText edtTtxt;
-    String tipo;
+    private EditText edtTtxt;
+    private String tipo;
 
-    public Mascara(EditText texto, String tipo) {
-        this.edtTtxt = texto;
+    public Mascara(EditText txt, String tipo) {
+        this.edtTtxt = txt;
         this.tipo  = tipo;
     }
 
@@ -24,24 +26,25 @@ public class Mascara implements TextWatcher {
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
         edtTtxt.removeTextChangedListener(this);
 
-        if (!charSequence.toString().isEmpty()) {
+        if (!edtTtxt.getText().toString().isEmpty()) {
             String texto = charSequence.toString().replaceAll("[^\\d]", "");
             double num   = Double.parseDouble(texto);
 
-            String formatado = "";
+            String formatado;
             if (tipo.equals("PESO")) {
                 formatado = new DecimalFormat("#,##0.00").format(num/100) + " kg";
-            } else if (tipo.equals("ALTURA")) {
+            } else {
                 formatado = new DecimalFormat("#0.00").format(num/100) + " m";
             }
 
             edtTtxt.setText(formatado);
-            edtTtxt.setSelection(formatado.length() - (tipo.equals("PESO") ? 3 : 2));
+            int x = tipo.equals("PESO") ? 3 : 2;
+            edtTtxt.setSelection(formatado.length() - x);
 
         }
 
 
-        edtTtxt.removeTextChangedListener(this);
+        edtTtxt.addTextChangedListener(this);
     }
 
     @Override
