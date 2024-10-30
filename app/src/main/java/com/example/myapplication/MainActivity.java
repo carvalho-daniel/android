@@ -49,35 +49,42 @@ public class MainActivity extends AppCompatActivity {
             String txtPeso   = peso.getText().toString();
             String txtAltura = altura.getText().toString();
 
+            // retira a formatação das entradas
             txtPeso   = txtPeso.replaceAll("[^\\d]", "");
             txtAltura = txtAltura.replaceAll("[^\\d]", "");
-
 
             double peso   = Double.parseDouble(txtPeso);
             double altura = Double.parseDouble(txtAltura);
 
-            double imc  = peso/(altura*altura);
-            imc *= 100;
-
-            @SuppressLint("DefaultLocale")
-            String formatado = String.format("%.2f", imc);
-            txtImc.setText("IMC: " + formatado);
-
-            if (imc <= 18.5) {
-                tipoPeso = "Baixo peso";
-            } else if (imc > 18.5 && imc <= 24.9) {
-                tipoPeso = "Eutrofia (peso adequado)";
-            } else if (imc >= 25 && imc <= 29.9) {
-                tipoPeso = "Sobrepeso";
-            } else if (imc >= 30 && imc <= 34.9) {
-                tipoPeso = "Obesidade grau 1";
-            } else if (imc >= 35 && imc <= 39.9) {
-                tipoPeso = "Obesidade grau 2";
+            // verifica se existe uma variável com zero, se for não é possível fazer o cálculo
+            if (peso == 0 || altura == 0) {
+                Toast.makeText(getApplicationContext(), "Os valores não podem ser 0", Toast.LENGTH_SHORT).show();
             } else {
-                tipoPeso = "Obesidade extrema";
-            }
+                double imc  = peso/(altura*altura);
+                imc *= 100;
 
-            txtTipoPeso.setText(tipoPeso);
+                // formata a variável de saida para mostrar somente duas casa decimais
+                @SuppressLint("DefaultLocale")
+                String formatado = String.format("%.2f", imc);
+
+                // ve qual tipo de peso
+                if (imc <= 18.5) {
+                    tipoPeso = "Baixo peso";
+                } else if (imc > 18.5 && imc <= 24.9) {
+                    tipoPeso = "Eutrofia (peso adequado)";
+                } else if (imc >= 25 && imc <= 29.9) {
+                    tipoPeso = "Sobrepeso";
+                } else if (imc >= 30 && imc <= 34.9) {
+                    tipoPeso = "Obesidade grau 1";
+                } else if (imc >= 35 && imc <= 39.9) {
+                    tipoPeso = "Obesidade grau 2";
+                } else {
+                    tipoPeso = "Obesidade extrema";
+                }
+
+                txtImc.setText("IMC: " + formatado);
+                txtTipoPeso.setText(tipoPeso);
+            }
 
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(), "Digite as informações certas! Erro: " + e.getMessage(), Toast.LENGTH_SHORT).show();
