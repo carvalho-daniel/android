@@ -15,43 +15,46 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView txtImc, txtTipoPeso;
-    EditText peso, altura;
+    // comentar
+    private TextView txtImc, txtTipoPeso;
+    private EditText peso, altura;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
 
-        txtImc      = findViewById(R.id.txtImc);
-        txtTipoPeso = findViewById(R.id.tipoPeso);
+        // atribuição dos componentes da tela (texto de resultado do IMC e tipo do peso)
+        this.txtImc      = findViewById(R.id.txtImc);
+        this.txtTipoPeso = findViewById(R.id.tipoPeso);
 
-        peso   = findViewById(R.id.peso);
-        altura = findViewById(R.id.altura);
+        // atribuição dos componentes de entrada da tela
+        this.peso   = findViewById(R.id.peso);
+        this.altura = findViewById(R.id.altura);
 
-        peso.addTextChangedListener(new Mascara(peso, "PESO"));
-        altura.addTextChangedListener(new Mascara(altura, "ALTURA"));
+        // adiciona a classe de mascara em cada uma das entradas
+        this.peso.addTextChangedListener(new Mascara(peso, "PESO"));
+        this.altura.addTextChangedListener(new Mascara(altura, "ALTURA"));
 
     }
 
+    /*
+    * O método pega os valores digitados pelo usuário, tira o formato criado pela máscara,
+    * cálculo o imc dado as entradas (caso exista exceção sera tratada) e atribui os valores de saída
+    * nos TextViews atribuidos na função do create()
+    * */
     public void onClick(View view) {
-        //  dividindo o peso (em quilogramas) pela altura ao quadrado (em metros)
-
         try {
             String tipoPeso;
-
-            String txtPeso   = peso.getText().toString();
-            String txtAltura = altura.getText().toString();
+            String txtPeso   = this.peso.getText().toString();
+            String txtAltura = this.altura.getText().toString();
 
             // retira a formatação das entradas
-            txtPeso   = txtPeso.replaceAll("[^\\d]", "");
-            txtAltura = txtAltura.replaceAll("[^\\d]", "");
+            txtPeso   = txtPeso.replaceAll("kg", "");
+            txtAltura = txtAltura.replaceAll("m", "");
+            txtPeso   = txtPeso.replaceAll(",", "");
+            txtAltura = txtAltura.replaceAll(",", "");
             txtPeso   = txtPeso.replaceAll(",", "");
             txtAltura = txtAltura.replaceAll(",", "");
 
@@ -63,13 +66,12 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Os valores não podem ser 0", Toast.LENGTH_SHORT).show();
             } else {
                 double imc  = peso/(altura*altura);
-                imc *= 100;
 
                 // formata a variável de saida para mostrar somente duas casa decimais
                 @SuppressLint("DefaultLocale")
                 String formatado = String.format("%.2f", imc);
 
-                // ve qual tipo de peso
+                // Verifica em qual calssificaçao o imc calculado se encontra
                 if (imc <= 18.5) {
                     tipoPeso = "Baixo peso";
                 } else if (imc > 18.5 && imc <= 24.9) {
@@ -83,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     tipoPeso = "Obesidade extrema";
                 }
-
                 txtImc.setText("IMC: " + formatado);
                 txtTipoPeso.setText(tipoPeso);
             }
@@ -91,8 +92,5 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(), "Digite as informações certas! Erro: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
-
-
-
     }
 }

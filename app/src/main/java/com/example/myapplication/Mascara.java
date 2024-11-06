@@ -3,12 +3,15 @@ package com.example.myapplication;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
-
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.Locale;
+
 
 public class Mascara implements TextWatcher {
+
+    /*
+    * váriaveis que são usadas para atribuição das váriaveis de entrada
+    * uma é referência ao EditText que está usando a máscara a outra qual o tipo da máscara
+    * */
     private EditText edtTtxt;
     private String tipo;
 
@@ -24,14 +27,17 @@ public class Mascara implements TextWatcher {
 
     @Override
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        edtTtxt.removeTextChangedListener(this);
+
+        // remove o listener para não ouvir a própria mudança e gerar loop infinito
+        this.edtTtxt.removeTextChangedListener(this);
 
         // verifica se o campo está vazio está vazio
-        if (!edtTtxt.getText().toString().isEmpty()) {
+        if (!this.edtTtxt.getText().toString().isEmpty()) {
             String texto = charSequence.toString().replaceAll("[^\\d]", "");
             double num   = Double.parseDouble(texto);
 
             String formatado;
+
             // recebe um tipo que diz se é peso ou altura para formartar diferente
             if (tipo.equals("PESO")) {
                 formatado = new DecimalFormat("#,##0.00").format(num/100) + " kg";
@@ -39,20 +45,15 @@ public class Mascara implements TextWatcher {
                 formatado = new DecimalFormat("#0.00").format(num/100) + " m";
             }
 
-            edtTtxt.setText(formatado);
-            /*
-            x indica a quantida de casas que não se deve pular,
-            já que o texto fica depois do valor
-             */
+            this.edtTtxt.setText(formatado);
+
+            // indica quantas casas não seram puladas dada o tipo da máscara
             int x = tipo.equals("PESO") ? 3 : 2;
 
             // coloca o cursor no final dos números menos a quantidade da mascara (peso ou altura)
-            edtTtxt.setSelection(formatado.length() - x);
-
+            this.edtTtxt.setSelection(formatado.length() - x);
         }
-
-
-        edtTtxt.addTextChangedListener(this);
+        this.edtTtxt.addTextChangedListener(this);
     }
 
     @Override
