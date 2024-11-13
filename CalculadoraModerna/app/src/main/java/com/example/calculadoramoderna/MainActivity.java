@@ -15,9 +15,11 @@ import androidx.core.view.WindowInsetsCompat;
 public class MainActivity extends AppCompatActivity {
 
     Button btn0, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9;
-    TextView resultado, subResultado;
+    TextView txtResultado, txtSubResultado;
 
     Button[] botoes;
+
+    Double resultado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +40,8 @@ public class MainActivity extends AppCompatActivity {
         btn8 = findViewById(R.id.btn8);
         btn9 = findViewById(R.id.btn9);
 
-        resultado    = findViewById(R.id.txtResultado);
-        subResultado = findViewById(R.id.txtSubResultado);
+        txtResultado    = findViewById(R.id.txtResultado);
+        txtSubResultado = findViewById(R.id.txtSubResultado);
 
         int p = 0;
         botoes[p++] = btn0;
@@ -66,30 +68,99 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickLimpar(View view) {
         // limpar as variaveis auxiliares de conta se precisar
-        resultado.setText("");
-        subResultado.setText("");
+        txtResultado.setText("");
+        txtSubResultado.setText("");
 
     }
 
     public void numero(Button btn) {
         String num = btn.getText().toString();
-        String subR = subResultado.getText().toString();
+        String subR = txtSubResultado.getText().toString();
 
         subR += num;
 
-        this.subResultado.setText(subR);
+        this.txtSubResultado.setText(subR);
 
     }
 
-    public void operacoes(final String OP) {
-        String subR = subResultado.getText().toString();
+    public void operacoes(String OP) {
+
+        String subR = this.txtSubResultado.getText().toString();
+        String txtRes = this.txtResultado.getText().toString();
 
         if (subR.isEmpty()) {
             Toast.makeText(getApplicationContext(), "Digite um valor primeiro", Toast.LENGTH_SHORT).show();
         } else {
-            subR += OP;
-            subResultado.setText(subR);
+
+            double numSub = Double.parseDouble(subR);
+
+            String r = "";
+
+            if (txtRes.isEmpty())
+                r = String.valueOf(numSub) + " " + OP;
+            else {
+                char ult = txtRes.charAt(txtRes.length()-1);
+
+                char o = OP.charAt(0);
+
+                int ate;
+
+                if (isOperacao(ult))
+                    ate = txtRes.length()-1;
+                else
+                    ate = txtRes.length();
+
+                if (txtRes.charAt(txtRes.length()-1) != o) {
+                    r = "";
+                    for (int i = 0; i < ate; i++) {
+                        r += txtRes.charAt(i);
+                    }
+                }
+
+
+                r += o;
+
+            }
+
+
+            this.txtResultado.setText(r);
+            if (txtRes.isEmpty())
+                this.txtSubResultado.setText("");
+
         }
+
+    }
+
+    public void onClickIgual(View view) {
+        String txtNum = "";
+        String txtRes = this.txtResultado.getText().toString();
+
+        if (!txtRes.isEmpty()) {
+            Double num1, num2;
+            char op = txtRes.charAt(txtRes.length()-1);
+
+            for (int i = 0; i < txtRes.length()-1; i++) {
+                txtNum += txtRes.charAt(i);
+            }
+
+            num1 = Double.parseDouble(txtNum);
+            num2 = Double.parseDouble(this.txtSubResultado.getText().toString());
+
+            switch (op) {
+                case '+':
+                    num1 += num2;
+                    break;
+                case '-':
+                    num1 -= num2;
+                    break;
+            }
+
+            this.txtResultado.setText(String.valueOf(num1));
+            this.txtSubResultado.setText("");
+
+        }
+
+
     }
 
     public void onClickMais(View view) { operacoes("+"); }
@@ -104,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickVirgula(View view) { operacoes(","); }
 
-
+    public boolean isOperacao(char op) { return op == '+' || op == '-' || op == 'x' || op == '/' || op == '%'; }
 
 
 }
