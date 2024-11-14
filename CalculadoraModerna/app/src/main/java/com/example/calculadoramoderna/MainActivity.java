@@ -12,6 +12,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import org.w3c.dom.Text;
+
 public class MainActivity extends AppCompatActivity {
 
     Button btn0, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9;
@@ -85,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void operacoes(String OP) {
 
-        String subR = this.txtSubResultado.getText().toString();
+        String subR   = this.txtSubResultado.getText().toString();
         String txtRes = this.txtResultado.getText().toString();
 
         if (subR.isEmpty()) {
@@ -115,13 +117,12 @@ public class MainActivity extends AppCompatActivity {
                     for (int i = 0; i < ate; i++) {
                         r += txtRes.charAt(i);
                     }
+                    if (!isOperacao(ult))
+                        r += " ";
+                    r += o;
                 }
 
-
-                r += o;
-
             }
-
 
             this.txtResultado.setText(r);
             if (txtRes.isEmpty())
@@ -135,8 +136,8 @@ public class MainActivity extends AppCompatActivity {
         String txtNum = "";
         String txtRes = this.txtResultado.getText().toString();
 
-        if (!txtRes.isEmpty()) {
-            Double num1, num2;
+        if (!txtRes.isEmpty() && !this.txtSubResultado.getText().toString().isEmpty()) {
+            double num1, num2;
             char op = txtRes.charAt(txtRes.length()-1);
 
             for (int i = 0; i < txtRes.length()-1; i++) {
@@ -153,6 +154,17 @@ public class MainActivity extends AppCompatActivity {
                 case '-':
                     num1 -= num2;
                     break;
+                case 'x':
+                    num1 *= num2;
+                    break;
+                case '/':
+                    if (num2 != 0)
+                        num1 /= num2;
+                    break;
+                case '%':
+                    break;
+                default:
+                    break;
             }
 
             this.txtResultado.setText(String.valueOf(num1));
@@ -163,6 +175,38 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    public void onClickPorcentagem(View view) {
+        String subR = this.txtSubResultado.getText().toString();
+
+        if (!subR.isEmpty()) {
+            double num = Double.parseDouble(subR);
+
+
+            num /= 100;
+
+            this.txtSubResultado.setText(String.valueOf(num));
+        }
+
+    }
+
+    public void onClickVirgula(View view) {
+        boolean jaTem = false;
+        String txtSubr = this.txtSubResultado.getText().toString();
+
+        if (!txtSubr.isEmpty()) {
+            for (int i = 0; i < txtSubr.length(); i++ ) {
+                if (txtSubr.charAt(i) == '.')
+                    jaTem = true;
+            }
+
+            if (!jaTem) {
+                txtSubr += ".";
+                this.txtSubResultado.setText(txtSubr);
+            }
+        }
+    }
+
     public void onClickMais(View view) { operacoes("+"); }
 
     public void onClickMenos(View view) { operacoes("-"); }
@@ -171,9 +215,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickDivisao(View view) { operacoes("/"); }
 
-    public void onClickPorcentagem(View view) { operacoes("%"); }
-
-    public void onClickVirgula(View view) { operacoes(","); }
+    public void onClickSinal(View view) {
+        String txtSubr = this.txtSubResultado.getText().toString();
+        if (!txtSubr.isEmpty()) {
+            double num = Double.parseDouble(txtSubr);
+            num *= -1;
+            this.txtSubResultado.setText(num+"");
+        }
+    }
 
     public boolean isOperacao(char op) { return op == '+' || op == '-' || op == 'x' || op == '/' || op == '%'; }
 
