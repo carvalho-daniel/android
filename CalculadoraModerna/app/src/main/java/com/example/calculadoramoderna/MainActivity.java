@@ -8,20 +8,12 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-
-import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
 
     Button btn0, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9;
     TextView txtResultado, txtSubResultado;
-
     Button[] botoes;
-
-    Double resultado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         btn8 = findViewById(R.id.btn8);
         btn9 = findViewById(R.id.btn9);
 
-        txtResultado    = findViewById(R.id.txtResultado);
+        txtResultado = findViewById(R.id.txtResultado);
         txtSubResultado = findViewById(R.id.txtSubResultado);
 
         int p = 0;
@@ -55,9 +47,9 @@ public class MainActivity extends AppCompatActivity {
         botoes[p++] = btn6;
         botoes[p++] = btn7;
         botoes[p++] = btn8;
-        botoes[p]   = btn9;
+        botoes[p] = btn9;
 
-        for(Button btn : botoes) {
+        for (Button btn : botoes) {
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -65,29 +57,26 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
-
     }
 
     public void onClickLimpar(View view) {
         // limpar as variaveis auxiliares de conta se precisar
         txtResultado.setText("");
         txtSubResultado.setText("");
-
     }
 
+    /**/
     public void numero(Button btn) {
         String num = btn.getText().toString();
-        String subR = txtSubResultado.getText().toString();
+        String subResult = txtSubResultado.getText().toString();
+        subResult += num;
 
-        subR += num;
-
-        this.txtSubResultado.setText(subR);
-
+        this.txtSubResultado.setText(subResult);
     }
 
     public void operacoes(String OP) {
 
-        String subR   = this.txtSubResultado.getText().toString();
+        String subR = this.txtSubResultado.getText().toString();
         String txtRes = this.txtResultado.getText().toString();
 
         if (subR.isEmpty()) {
@@ -95,24 +84,21 @@ public class MainActivity extends AppCompatActivity {
         } else {
 
             double numSub = Double.parseDouble(subR);
-
             String r = "";
 
             if (txtRes.isEmpty())
                 r = String.valueOf(numSub) + " " + OP;
             else {
-                char ult = txtRes.charAt(txtRes.length()-1);
-
+                char ult = txtRes.charAt(txtRes.length() - 1);
                 char o = OP.charAt(0);
-
                 int ate;
 
                 if (isOperacao(ult))
-                    ate = txtRes.length()-1;
+                    ate = txtRes.length() - 1;
                 else
                     ate = txtRes.length();
 
-                if (txtRes.charAt(txtRes.length()-1) != o) {
+                if (txtRes.charAt(txtRes.length() - 1) != o) {
                     r = "";
                     for (int i = 0; i < ate; i++) {
                         r += txtRes.charAt(i);
@@ -129,7 +115,6 @@ public class MainActivity extends AppCompatActivity {
                 this.txtSubResultado.setText("");
 
         }
-
     }
 
     public void onClickIgual(View view) {
@@ -138,9 +123,9 @@ public class MainActivity extends AppCompatActivity {
 
         if (!txtRes.isEmpty() && !this.txtSubResultado.getText().toString().isEmpty()) {
             double num1, num2;
-            char op = txtRes.charAt(txtRes.length()-1);
+            char op = txtRes.charAt(txtRes.length() - 1);
 
-            for (int i = 0; i < txtRes.length()-1; i++) {
+            for (int i = 0; i < txtRes.length() - 1; i++) {
                 txtNum += txtRes.charAt(i);
             }
 
@@ -166,28 +151,23 @@ public class MainActivity extends AppCompatActivity {
                 default:
                     break;
             }
-
             this.txtResultado.setText(String.valueOf(num1));
             this.txtSubResultado.setText("");
-
+        } else {
+            Toast.makeText(getApplicationContext(), "Digite um valor e a operação!", Toast.LENGTH_SHORT).show();
         }
 
 
     }
-
 
     public void onClickPorcentagem(View view) {
         String subR = this.txtSubResultado.getText().toString();
 
         if (!subR.isEmpty()) {
             double num = Double.parseDouble(subR);
-
-
             num /= 100;
-
             this.txtSubResultado.setText(String.valueOf(num));
         }
-
     }
 
     public void onClickVirgula(View view) {
@@ -195,11 +175,10 @@ public class MainActivity extends AppCompatActivity {
         String txtSubr = this.txtSubResultado.getText().toString();
 
         if (!txtSubr.isEmpty()) {
-            for (int i = 0; i < txtSubr.length(); i++ ) {
+            for (int i = 0; i < txtSubr.length(); i++) {
                 if (txtSubr.charAt(i) == '.')
                     jaTem = true;
             }
-
             if (!jaTem) {
                 txtSubr += ".";
                 this.txtSubResultado.setText(txtSubr);
@@ -207,24 +186,34 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void onClickMais(View view) { operacoes("+"); }
+    public void onClickMais(View view) {
+        operacoes("+");
+    }
 
-    public void onClickMenos(View view) { operacoes("-"); }
+    public void onClickMenos(View view) {
+        operacoes("-");
+    }
 
-    public void onClickMult(View view) { operacoes("x"); }
+    public void onClickMult(View view) {
+        operacoes("x");
+    }
 
-    public void onClickDivisao(View view) { operacoes("/"); }
+    public void onClickDivisao(View view) {
+        operacoes("/");
+    }
 
     public void onClickSinal(View view) {
         String txtSubr = this.txtSubResultado.getText().toString();
         if (!txtSubr.isEmpty()) {
             double num = Double.parseDouble(txtSubr);
             num *= -1;
-            this.txtSubResultado.setText(num+"");
+            this.txtSubResultado.setText(num + "");
         }
     }
 
-    public boolean isOperacao(char op) { return op == '+' || op == '-' || op == 'x' || op == '/' || op == '%'; }
+    public boolean isOperacao(char op) {
+        return op == '+' || op == '-' || op == 'x' || op == '/' || op == '%';
+    }
 
 
 }
