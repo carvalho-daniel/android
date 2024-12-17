@@ -8,18 +8,40 @@
     tools:context=".MainActivity"
     >
 
+    <TextView
+        android:id="@+id/titulo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pizzaria da Resenha"
+        android:gravity="center"
+        android:layout_margin="10dp"
+        android:textSize="25dp"
+        android:textStyle="bold|italic"
+        />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="600dp"
-        android:layout_margin="16dp"/>
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_above="@+id/solicitar"
+        android:layout_below="@+id/titulo"
+        />
 
     <Button
+        android:id="@+id/solicitar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/recyclerView"
+        android:layout_alignParentBottom="true"
         android:text="Solicitar"
-        android:layout_margin="10dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         />
 
 </RelativeLayout>
