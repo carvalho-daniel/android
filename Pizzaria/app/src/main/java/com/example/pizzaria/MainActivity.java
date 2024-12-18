@@ -2,18 +2,13 @@ package com.example.pizzaria;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -31,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
         ArrayList<PizzaModel> pizzaModels = new ArrayList<>();
 
-        // nome, ingredientes, valor, imagem
+        // pizzas montadas com base no modelo de pizza, usada depois para o layout
         PizzaModel pizza1  = new PizzaModel("Calabresa", "calabresa, queijo", 29.90, R.drawable.calabresa);
         PizzaModel pizza2  = new PizzaModel("Portuguesa", "Ovos, cebola, azeitona, ervilha, queijo e presunto", 29.90, R.drawable.portuguesa);
         PizzaModel pizza3  = new PizzaModel("Marguerita", "Molho, muçarela, tomate e manjericão", 29.90, R.drawable.marguerita);
@@ -72,12 +67,18 @@ public class MainActivity extends AppCompatActivity {
         pizzaModels.add(pizza18);
         pizzaModels.add(pizza19);
 
+        // criação do RecyclerView usanda a lista de itens acima
         RecyclerView.Adapter<PizzaAdapter.ViewHolder> adapter = new PizzaAdapter(pizzaModels);
 
+        // gerenciador de layout usada para a recycle view
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+    }
 
+    // texto para o botão de solicitar
+    public void onClickSolicitar(View view) {
+        Toast.makeText(this, "Obrigado por comprar com a Pizzaria Resenha!", Toast.LENGTH_SHORT).show();
     }
 }
