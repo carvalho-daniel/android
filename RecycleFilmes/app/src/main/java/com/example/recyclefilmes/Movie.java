@@ -7,7 +7,6 @@ public class Movie {
     private int posterImage;
     private String releaseDate;
 
-
     public Movie(String title, int posterImage, String releaseDate, double rating, String overview) {
         this.title = title;
         this.posterImage = posterImage;
@@ -15,7 +14,6 @@ public class Movie {
         this.rating = rating;
         this.overview = overview;
     }
-
 
     public double getRating() {
         return rating;

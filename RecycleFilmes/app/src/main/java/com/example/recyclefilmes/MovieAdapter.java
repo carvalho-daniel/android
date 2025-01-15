@@ -6,9 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
@@ -32,7 +30,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         Movie movie = movieList.get(position);
         holder.titleTextView.setText(movie.getTitle());
         holder.releaseDateTextView.setText(movie.getReleaseDate());
-
         holder.posterImageView.setImageResource(movie.getPosterImage());
 
         holder.itemView.setOnClickListener(v -> {
@@ -53,7 +50,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     }
 
     public static class MovieViewHolder extends RecyclerView.ViewHolder {
-        TextView titleTextView, releaseDateTextView;
+        TextView titleTextView, releaseDateTextView, overview;
         ImageView posterImageView;
 
         public MovieViewHolder(View itemView) {
