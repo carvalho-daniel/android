@@ -55,7 +55,7 @@ public class TarefaAdapter extends RecyclerView.Adapter<TarefaAdapter.TarefaView
             novoTitulo.setText(holder.titulo.getText().toString());
             new AlertDialog.Builder(holder.itemView.getContext())
                     .setTitle("Editar tarefa")
-                    .setMessage(holder.titulo.getText().toString())
+                    .setMessage("")
                     .setView(novoTitulo)
                     .setPositiveButton("Salvar", new DialogInterface.OnClickListener() {
                         @Override
