@@ -53,10 +53,16 @@ public class MainActivity extends AppCompatActivity {
         TextView titulo = findViewById(R.id.tituloTarefa);
         String tituloTarefa = titulo.getText().toString();
 
-        tarefaList.add(new Tarefa(tituloTarefa, false));
-        tarefaAdapter.notifyItemInserted(tarefaList.size() - 1);
+        if(!tituloTarefa.isEmpty()) {
+            tarefaList.add(new Tarefa(tituloTarefa, false));
+            tarefaAdapter.notifyItemInserted(tarefaList.size() - 1);
 
-        titulo.setText("");
+            titulo.setText("");
+        } else {
+            Toast.makeText(getApplicationContext(), "O título da tarefa não pode ser vazio!", Toast.LENGTH_SHORT).show();
+        }
+
+
     }
 
     public static void excluir(int p) {
