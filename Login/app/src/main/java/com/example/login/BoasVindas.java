@@ -18,6 +18,10 @@ public class BoasVindas extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_boas_vindas);
 
+        /*
+            A tela de login passa para essa tela o nome do usuário
+            que pega atravéz da intent e escreve na tela uma mengagem de boas vidnas
+         */
         Intent it = getIntent();
 
         TextView mensagem = findViewById(R.id.mensagem);

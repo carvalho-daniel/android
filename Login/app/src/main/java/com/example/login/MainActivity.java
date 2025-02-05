@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -23,14 +22,18 @@ public class MainActivity extends AppCompatActivity {
         login();
     }
 
-    // função que conduz o usuário para a tela de cadastro
+    // Função que conduz o usuário para a tela de cadastro
     public void onClickParaCadastro(View view) {
         Intent it = new Intent(MainActivity.this, Cadastro.class);
         startActivity(it);
-
     }
 
-    private void login() {
+    /*
+        Método para realizar login, caso as informações estejam certas o usuário é conduzido para a tela de boas vindas
+        caso ele esteja errado é mostrado uma mensagem para reescrever as informações
+        caso não exista um login o usuário é conduzido para a tela de cadastro
+     */
+    public void login() {
         btnEntrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,18 +53,20 @@ public class MainActivity extends AppCompatActivity {
                         it2 =  new Intent(MainActivity.this, Cadastro.class);
                         Toast.makeText(MainActivity.this, "Usuário não existe, indo para cadastro!", Toast.LENGTH_SHORT).show();
                         startActivity(it2);
-                    } else {
+                    }
+                    else {
                         if(nomeLogin.equals(nomeSalvo) && senhaLogin.equals(senhaSalva)) {
                             Toast.makeText(MainActivity.this, "Login realizado com sucesso", Toast.LENGTH_SHORT).show();
                             it2 = new Intent(MainActivity.this, BoasVindas.class);
                             it2.putExtra("nome", nomeLogin);
                             startActivity(it2);
-                        } else {
+                        }
+                        else {
                             Toast.makeText(MainActivity.this, "Senha ou nome errados! Digite novamente", Toast.LENGTH_SHORT).show();
                         }
                     }
-
-                } else {
+                }
+                else {
                     Toast.makeText(MainActivity.this, "Preencha todos os campos!", Toast.LENGTH_SHORT).show();
                 }
             }

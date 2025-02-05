@@ -29,6 +29,11 @@ public class Cadastro extends AppCompatActivity {
         cadastrarUsuario();
     }
 
+    /*
+        Cadastro de usuário
+        método para cadastrar o usuário com as informçaões que ele deseja
+        é salvo no sharedpreferences para caso o usuário feche a janela o login dele continue
+     */
     private void cadastrarUsuario() {
         cadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
