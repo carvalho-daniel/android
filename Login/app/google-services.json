@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "726912501187",
+    "project_id": "login-moveis2",
+    "storage_bucket": "login-moveis2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:726912501187:android:3013bb746c697445bba976",
+        "android_client_info": {
+          "package_name": "com.example.login"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9XdnwntN1KwcYSrSmByqgQBQ3OJBRnDQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

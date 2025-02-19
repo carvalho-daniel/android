@@ -16,11 +16,33 @@
         />
 
     <EditText
+        android:id="@+id/idadeCad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/nomeCad"
+        android:hint="Idade"
+        />
+
+    <EditText
+        android:id="@+id/emailCad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/idadeCad"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="10dp"
+        android:hint="Email"
+        />
+
+    <EditText
         android:id="@+id/senhaCad"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
-        android:layout_below="@+id/nomeCad"
+        android:layout_below="@+id/emailCad"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginTop="10dp"
