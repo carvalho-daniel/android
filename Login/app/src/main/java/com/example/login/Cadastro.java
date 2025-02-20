@@ -64,7 +64,7 @@ public class Cadastro extends AppCompatActivity {
                 String email = edtEmail.getText().toString();
                 String senha = edtSenha.getText().toString();
 
-                if(!email.isEmpty() && !senha.isEmpty()) {
+                if(!email.isEmpty() && !senha.isEmpty() && !nome.isEmpty() && idade > 0) {
                     mAuth.createUserWithEmailAndPassword(email, senha).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
