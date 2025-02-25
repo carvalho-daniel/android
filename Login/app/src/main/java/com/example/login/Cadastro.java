@@ -1,8 +1,8 @@
 package com.example.login;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -12,9 +12,6 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -46,70 +43,83 @@ public class Cadastro extends AppCompatActivity {
     }
 
     /*
-        Cadastro de usuário
-        método para cadastrar o usuário com as informçaões que ele deseja
+        Cadastro de usuário: método para cadastrar o usuário com as informçaões que ele deseja
         é salvo no sharedpreferences para caso o usuário feche a janela o login dele continue
      */
     private void cadastrarUsuario() {
+
         cadastrar.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
-                EditText edtNome  = findViewById(R.id.nomeCad);
+                EditText edtNome = findViewById(R.id.nomeCad);
                 EditText edtIdade = findViewById(R.id.idadeCad);
                 EditText edtEmail = findViewById(R.id.emailCad);
                 EditText edtSenha = findViewById(R.id.senhaCad);
 
                 String nome = edtNome.getText().toString();
-                int idade = Integer.parseInt(edtIdade.getText().toString());
+                // mudar pra number no xml
+                String idade = edtIdade.getText().toString();
                 String email = edtEmail.getText().toString();
                 String senha = edtSenha.getText().toString();
 
-                if(!email.isEmpty() && !senha.isEmpty() && !nome.isEmpty() && idade > 0) {
-                    mAuth.createUserWithEmailAndPassword(email, senha).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if(task.isSuccessful()) {
-                                FirebaseUser user = mAuth.getCurrentUser();
-                                if(user != null)
-                                    user.sendEmailVerification();
+                if (!email.isEmpty() && !senha.isEmpty() && !nome.isEmpty() && !idade.isEmpty()) {
+                    int age = Integer.parseInt(edtIdade.getText().toString());
 
-                                DatabaseReference userRef = myRef.child("usuario");
-                                Usuario usr = new Usuario(nome, idade, email);
+                    if (senha.length() >= 6) {
+                        mAuth.createUserWithEmailAndPassword(email, senha).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
 
-                                String idUsuario = mAuth.getCurrentUser().getUid();
+                                if (task.isSuccessful()) {
 
-                                userRef.child(idUsuario).setValue(usr).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful()) {
-                                            Log.d("Firebase", "Usuário salvo com sucesso");
-                                        } else {
-                                            Log.d("Firebase", "Erro ao tentar salvar usuáiro", task.getException());
+                                    // Acessa o usuario logado
+                                    FirebaseUser user = mAuth.getCurrentUser();
+                                    if (user != null)
+                                        user.sendEmailVerification();
+
+                                    // Referencia do DB ao cadastro do usuario
+                                    DatabaseReference userRef = myRef.child("usuario");
+
+                                    // Cria um objeto usuario com os devidos campos preenchidos
+                                    Usuario usr = new Usuario(nome, age, email);
+
+                                    // Coleta o ID do usuario logado
+                                    String idUsuario = mAuth.getCurrentUser().getUid();
+
+                                    // Método que registra no DB os dados do objeto usuario
+                                    userRef.child(idUsuario).setValue(usr).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Toast.makeText(Cadastro.this, "Verifique seu email para terminar o cadastro.", Toast.LENGTH_SHORT).show();
+                                                // Usando Handler para atrasar a execução de outro código, caso precise
+                                                new Handler().postDelayed(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        // Ação a ser realizada após o Toast desaparecer (se necessário)
+
+                                                        // Retorna para a tela inicial (MainActivity)
+                                                        Intent it = new Intent(Cadastro.this, MainActivity.class);
+                                                        startActivity(it);
+                                                        finish();
+                                                    }
+                                                }, 3000); // 3000ms = 2 segundos
+                                            } else {
+                                                Log.d("Firebase Realtime DB", "Erro ao tentar salvar usuáiro", task.getException());
+                                            }
                                         }
-                                    }
-                                });
-
-
-
+                                    });
+                                }
                             }
-                        }
-                    });
-
-                    Toast.makeText(Cadastro.this, "Registrado com sucesso", Toast.LENGTH_SHORT).show();
-
-                    Intent it = new Intent(Cadastro.this, MainActivity.class);
-                    startActivity(it);
-                    finish();
-
-
-
+                        });
+                    } else {
+                        Toast.makeText(Cadastro.this, "O campo senha precisar conter, pelo menos, 6 caracteres.", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     Toast.makeText(Cadastro.this, "Preencha todos os campos!", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
     }
-
-
 };

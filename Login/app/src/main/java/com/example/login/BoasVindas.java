@@ -1,16 +1,11 @@
 package com.example.login;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
-
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,7 +25,6 @@ public class BoasVindas extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_boas_vindas);
 
-
         TextView mensagem = findViewById(R.id.mensagem);
 
         mAuth = FirebaseAuth.getInstance();
@@ -41,7 +35,6 @@ public class BoasVindas extends AppCompatActivity {
         String idUsuario = mAuth.getCurrentUser().getUid();
 
         DatabaseReference userRef = myRef.child("usuario").child(idUsuario);
-
 
         // usando o id do usuário que o próprio firebase utiliza pode-se retornar o nome do usuário e atribuir ao texto da tela
         userRef.addValueEventListener(new ValueEventListener() {
@@ -57,10 +50,8 @@ public class BoasVindas extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Log.v("onCancelled", error.getMessage());
             }
         });
-
-
     }
 }

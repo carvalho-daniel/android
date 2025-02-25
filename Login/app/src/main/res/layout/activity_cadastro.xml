@@ -23,6 +23,7 @@
         android:layout_marginRight="30dp"
         android:layout_marginTop="10dp"
         android:layout_below="@+id/nomeCad"
+        android:inputType="number"
         android:hint="Idade"
         />
 
