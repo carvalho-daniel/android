@@ -6,8 +6,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
+    android:background="#274445"
     >
 
+    <ImageView
+        android:id="@+id/imgBart"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:src="@drawable/bart"
+        />
 
     <EditText
         android:id="@+id/email"
@@ -17,7 +24,12 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
+        android:layout_below="@+id/imgBart"
+        android:textColorHint="@color/white"
+        android:backgroundTint="@color/white"
         android:hint="Email"
+        android:textColor="@color/white"
+
         />
 
     <EditText
@@ -29,7 +41,10 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginTop="10dp"
+        android:textColorHint="@color/white"
+        android:backgroundTint="@color/white"
         android:hint="Senha"
+        android:textColor="@color/white"
         />
 
     <Button
@@ -40,6 +55,8 @@
         android:text="Entrar"
         android:layout_below="@+id/senha"
         android:layout_marginTop="20dp"
+        android:backgroundTint="#ffd90f"
+        android:textColor="@color/black"
         />
 
     <LinearLayout
@@ -58,6 +75,7 @@
             android:text="Ainda não possui uma conta ?"
             android:layout_margin="5dp"
             android:textSize="16dp"
+            android:textColor="@color/white"
             />
 
         <TextView
